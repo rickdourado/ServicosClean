@@ -124,6 +124,46 @@ function mostrarErro(mensagem) {
 }
 
 /**
+ * Copia o texto formatado como .txt para a área de transferência
+ */
+function copiarTexto() {
+    if (!textoMarkdownOriginal) {
+        mostrarErro('Nenhum resultado disponível para copiar.');
+        return;
+    }
+    
+    // Converte markdown para texto simples (remove formatação)
+    const textoSimples = textoMarkdownOriginal
+        .replace(/##\s+/g, '') // Remove títulos
+        .replace(/\*\*(.+?)\*\*/g, '$1') // Remove negrito
+        .replace(/^-\s+/gm, '') // Remove marcadores de lista
+        .replace(/^\d+\.\s+/gm, '') // Remove numeração de lista
+        .trim();
+    
+    // Copia para a área de transferência
+    navigator.clipboard.writeText(textoSimples).then(function() {
+        // Feedback visual
+        const btnCopiar = document.getElementById('btn-copiar-texto');
+        const textoOriginal = btnCopiar.innerHTML;
+        btnCopiar.innerHTML = '<span>✓</span> Copiado!';
+        btnCopiar.style.background = 'var(--success-color)';
+        btnCopiar.style.borderColor = 'var(--success-color)';
+        btnCopiar.style.color = 'white';
+        
+        // Restaura o botão após 2 segundos
+        setTimeout(function() {
+            btnCopiar.innerHTML = textoOriginal;
+            btnCopiar.style.background = '';
+            btnCopiar.style.borderColor = '';
+            btnCopiar.style.color = '';
+        }, 2000);
+    }).catch(function(err) {
+        console.error('Erro ao copiar:', err);
+        mostrarErro('Erro ao copiar texto. Tente novamente.');
+    });
+}
+
+/**
  * Baixa o resultado em formato Markdown (.md)
  */
 function baixarMarkdown() {

@@ -6,23 +6,24 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
+    /* Cores oficiais do Carioca.rio - Prefeitura do Rio de Janeiro */
+    --primary-color: #13335a; /* Azul Escuro oficial */
+    --primary-hover: #0f2847; /* Azul mais escuro para hover */
     --secondary-color: #64748b;
     --success-color: #10b981;
     --error-color: #ef4444;
-    --bg-color: #f8fafc;
+    --bg-color: #eceded; /* Cinza Claro oficial */
     --card-bg: #ffffff;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
-    --border-color: #e2e8f0;
+    --border-color: #d1d5db;
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bg-color); /* Fundo cinza claro oficial */
     min-height: 100vh;
     padding: 20px;
     color: var(--text-primary);
@@ -38,10 +39,11 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    background: var(--primary-color); /* Azul escuro oficial */
     color: white;
     padding: 2rem;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
@@ -158,7 +160,7 @@ textarea:focus {
     padding: 1.5rem;
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    background: var(--bg-color);
+    background: #f9fafb; /* Fundo ligeiramente mais claro que o bg-color */
     color: var(--text-primary);
     font-size: 1rem;
     line-height: 1.6;
@@ -173,12 +175,13 @@ textarea:focus {
 }
 
 .output-area h2 {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Azul escuro oficial */
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     font-size: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--primary-color);
     padding-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .output-area h2:first-child {
@@ -242,6 +245,17 @@ textarea:focus {
 
 .btn-download span {
     font-size: 1.2rem;
+}
+
+.btn-copiar {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.btn-copiar:hover {
+    background: #059669;
+    border-color: #059669;
 }
 
 /* Responsividade */
