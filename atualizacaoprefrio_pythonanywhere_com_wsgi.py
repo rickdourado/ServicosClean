@@ -6,17 +6,24 @@ Configurado para o usuário: atualizacaoprefrio
 import sys
 import os
 
-# Adiciona o caminho do projeto
-path = '/home/atualizacaoprefrio'
-if path not in sys.path:
-    sys.path.insert(0, path)
 
-# Carrega variáveis de ambiente
+# Diretório do projeto (ajustado para conter a pasta ServicosClean)
+project_home = '/home/atualizacaoprefrio/ServicosClean'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+# Carrega variáveis de ambiente do projeto, se existir
 from dotenv import load_dotenv
-load_dotenv(os.path.join(path, '.env'))
+env_path = os.path.join(project_home, '.env')
+if os.path.exists(env_path):
+    load_dotenv(env_path)
 
-# Importa a aplicação
-from app import app as application
+# Importa a aplicação WSGI. Primeiro tenta `flask_app.application` (mais explícito),
+# senão faz fallback para `app.app` para compatibilidade.
+try:
+    from flask_app import application
+except Exception:
+    from app import app as application
 
 if __name__ == "__main__":
     application.run()
