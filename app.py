@@ -152,7 +152,21 @@ SIGA EXATAMENTE a estrutura principal definida acima (linhas 65-79 do limpezaser
 
 Siga TODAS as regras especificadas no início deste prompt, mas use a estrutura principal acima como referência PRINCIPAL para o formato de saída.
 
-Retorne APENAS o JSON estruturado com o campo "descricao_completa" formatado em Markdown conforme a estrutura principal.
+Retorne APENAS um JSON com os seguintes campos (use os nomes exatos das chaves):
+
+- `descricao_resumida`: string (resumo curto, 1-2 frases)
+- `descricao_completa`: string (Markdown com as 3 seções: "O que é", "Para que serve", "Quem pode solicitar")
+- `servico_nao_cobre`: string ou lista Markdown (limitações)
+- `tempo_atendimento`: string (prazos, ex: "72 horas", "até 20 dias")
+- `custo`: string (valores ou "isento"/"gratuito")
+- `resultado_solicitacao`: string (resultado/entregáveis esperados)
+- `documentos_necessarios`: string ou Markdown list (lista de documentos)
+- `instrucoes_solicitante`: string ou Markdown (instruções passo a passo)
+- `canais_digitais`: string ou Markdown (URLs / plataformas)
+- `canais_presenciais`: string ou Markdown (endereços e horários)
+- `legislacao_relacionada`: string ou Markdown (referências legais)
+
+Cada campo deve ser preenchido — se uma informação não estiver disponível no texto de entrada, retorne uma string vazia para esse campo. Retorne o JSON puro (pode estar dentro de um bloco de código ```json```).
 """
     return prompt
 
@@ -220,10 +234,25 @@ def processar():
         
         # Processa com Gemini
         resultado = processar_com_gemini(prompt)
-        
+
+        # Garante que retornamos um dicionário com os campos esperados
+        if not isinstance(resultado, dict):
+            raise Exception('Resposta do modelo não veio como JSON/dicionário')
+
+        # Preenche chaves ausentes com string vazia
+        campos = [
+            'descricao_resumida', 'descricao_completa', 'servico_nao_cobre',
+            'tempo_atendimento', 'custo', 'resultado_solicitacao',
+            'documentos_necessarios', 'instrucoes_solicitante',
+            'canais_digitais', 'canais_presenciais', 'legislacao_relacionada'
+        ]
+        for c in campos:
+            if c not in resultado:
+                resultado[c] = ''
+
         return jsonify({
             'sucesso': True,
-            'resultado': resultado.get('descricao_completa', '')
+            'resultado': resultado
         })
         
     except Exception as e:
