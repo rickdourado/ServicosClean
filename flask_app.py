@@ -1,18 +1,31 @@
-"""Entrypoint WSGI mínimo para PythonAnywhere.
+#!/usr/bin/python3.11
 
-Este arquivo importa a instância `app` definida em `app.py`
-e a expõe como `application`, que é o nome esperado pelo WSGI.
+# Este arquivo é usado pelo PythonAnywhere para servir a aplicação Flask
+# Arquivo flask_app.py no diretório raiz da conta CicloCarioca.pythonanywhere.com
 
-Coloque este arquivo na raiz do projeto (já está aqui) e aponte
-o WSGI file do PythonAnywhere para `flask_app.application`.
-"""
-import os
 import sys
+import os
 
-# Garante que o diretório do projeto esteja no sys.path
-PROJECT_HOME = os.path.dirname(os.path.abspath(__file__))
-if PROJECT_HOME not in sys.path:
-    sys.path.insert(0, PROJECT_HOME)
+# Adicione o caminho do projeto ao sys.path
+path = os.path.dirname(os.path.abspath(__file__))
+if path not in sys.path:
+    sys.path.append(path)
 
-# Importa a app Flask do arquivo app.py e a expõe como `application`
+# Importar dotenv para carregar variáveis de ambiente do arquivo .env
+from dotenv import load_dotenv
+
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+# Configurações de ambiente para produção
+os.environ['FLASK_ENV'] = 'production'
+
+# As demais variáveis sensíveis (SECRET_KEY, ADMIN_USERNAME, ADMIN_PASSWORD, GEMINI_API_KEY)
+# são carregadas automaticamente do arquivo .env pelo load_dotenv()
+
+# Importar a aplicação Flask
 from app import app as application
+
+# Para compatibilidade com PythonAnywhere
+if __name__ == "__main__":
+    application.run()
