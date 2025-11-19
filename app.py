@@ -130,7 +130,7 @@ SIGA EXATAMENTE a estrutura principal definida acima (linhas 65-79 do limpezaser
    - **LIMITE OBRIGATÓRIO: MÁXIMO de 1-2 parágrafos de 2-3 linhas cada**
    - Seja conciso e direto
    - NÃO exceda 2 parágrafos
-  - Esse campo NÃO pode ficar em branco. 
+   - Esse campo NÃO pode ficar em branco. 
    - Cada parágrafo deve ter no máximo 3-4 linhas
    - Explicação clara e objetiva do serviço
 

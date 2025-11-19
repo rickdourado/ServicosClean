@@ -101,14 +101,24 @@ ServicosClean/
 
 ### 6. Configurar o Arquivo WSGI
 
-O PythonAnywhere criará um arquivo WSGI. Edite-o para apontar para sua aplicação:
+O arquivo WSGI já está configurado em `atualizacaoprefrio_pythonanywhere_com_wsgi.py`.
+
+**No PythonAnywhere:**
+
+1. Vá em **Web** → **WSGI configuration file**
+2. O caminho deve ser: `/var/www/atualizacaoprefrio_pythonanywhere_com_wsgi.py`
+3. Copie o conteúdo do arquivo `atualizacaoprefrio_pythonanywhere_com_wsgi.py` do projeto
+4. Cole no editor do PythonAnywhere
+5. Salve o arquivo
+
+**Conteúdo do arquivo WSGI:**
 
 ```python
 import sys
 import os
 
 # Adiciona o caminho do projeto
-path = '/home/seuusuario/ServicosClean'
+path = '/home/atualizacaoprefrio'
 if path not in sys.path:
     sys.path.insert(0, path)
 
@@ -123,14 +133,12 @@ if __name__ == "__main__":
     application.run()
 ```
 
-**Substitua `seuusuario` pelo seu nome de usuário do PythonAnywhere.**
-
 ### 7. Configurar Static Files
 
 No painel **Web**, configure os arquivos estáticos:
 
 - **URL:** `/static/`
-- **Directory:** `/home/seuusuario/ServicosClean/static/`
+- **Directory:** `/home/atualizacaoprefrio/static/`
 
 ### 8. Reiniciar a Aplicação
 
@@ -139,26 +147,30 @@ No painel **Web**, configure os arquivos estáticos:
 
 ### 9. Testar
 
-Acesse sua URL: `https://seuusuario.pythonanywhere.com`
+Acesse sua URL: `https://atualizacaoprefrio.pythonanywhere.com`
 
 ## Estrutura de Arquivos no PythonAnywhere
 
 ```
-/home/seuusuario/
-└── ServicosClean/
-    ├── app.py
-    ├── requirements.txt
-    ├── .env
-    ├── templates/
-    │   └── index.html
-    ├── static/
-    │   ├── css/
-    │   │   └── style.css
-    │   └── js/
-    │       └── main.js
-    └── .cursor/
-        └── rules/
-            └── limpezaservicos.mdc
+/home/atualizacaoprefrio/
+├── app.py
+├── requirements.txt
+├── .env
+├── templates/
+│   └── index.html
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── main.js
+└── .cursor/
+    └── rules/
+        └── limpezaservicos.mdc
+```
+
+**Arquivo WSGI (gerenciado pelo PythonAnywhere):**
+```
+/var/www/atualizacaoprefrio_pythonanywhere_com_wsgi.py
 ```
 
 ## Troubleshooting
