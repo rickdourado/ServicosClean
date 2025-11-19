@@ -23,9 +23,12 @@ os.environ['FLASK_ENV'] = 'production'
 # As demais variáveis sensíveis (SECRET_KEY, ADMIN_USERNAME, ADMIN_PASSWORD, GEMINI_API_KEY)
 # são carregadas automaticamente do arquivo .env pelo load_dotenv()
 
-# Importar a aplicação Flask
-from app import app as application
+# Importar a aplicação Flask (instância `app` definida em `app.py`)
+from app import app
 
-# Para compatibilidade com PythonAnywhere
+# Compatibilidade: exponha `application` (WSGI) e `app` (uso local)
+application = app
+
+# Para compatibilidade com execução direta
 if __name__ == "__main__":
     application.run()
