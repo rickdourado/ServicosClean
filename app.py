@@ -49,10 +49,10 @@ def carregar_regras():
 
 def carregar_estrutura_principal():
     """
-    Carrega a estrutura principal do prompt (linhas 65-79 do limpezaservicos.mdc).
+    Carrega a estrutura principal do prompt (limpezaservicos.mdc).
     Esta é a estrutura padrão que deve ser seguida para padronizar todos os serviços.
     
-    Referência: @limpezaservicos.mdc (65-79)
+    Referência: @limpezaservicos.mdc 
     As linhas 65-79 referem-se ao arquivo original completo (incluindo frontmatter).
     """
     try:
@@ -82,7 +82,7 @@ def criar_prompt(regras, texto_entrada):
     """
     Cria o prompt para o Gemini com as regras e o texto de entrada livre.
     
-    O PROMPT PRINCIPAL é baseado na estrutura das linhas 65-79 do arquivo
+    O PROMPT PRINCIPAL é baseado na estrutura do arquivo
     limpezaservicos.mdc, que define o formato padrão para padronizar todos os serviços.
     
     O Gemini deve processar o texto livre e retornar formatado seguindo essa estrutura.
@@ -91,16 +91,6 @@ def criar_prompt(regras, texto_entrada):
     estrutura_principal = carregar_estrutura_principal()
     
     prompt = f"""{regras}
-
----
-
-## ⚠️ LIMITAÇÃO CRÍTICA - Seção "O que é"
-
-A seção "## O que é" DEVE ter EXATAMENTE:
-- MÁXIMO de 1-2 parágrafos
-- Cada parágrafo com MÁXIMO de 3-4 linhas
-- Seja conciso e objetivo
-- NÃO exceda esse limite mesmo que o texto de entrada seja extenso
 
 ---
 
@@ -124,32 +114,6 @@ Esta é a estrutura PRINCIPAL que deve ser seguida para padronizar TODOS os serv
 
 Analise o texto livre acima e extraia/processe as informações para criar uma descrição completa.
 
-SIGA EXATAMENTE a estrutura principal definida acima (linhas 65-79 do limpezaservicos.mdc), transformando o texto livre em uma saída padronizada com as três seções:
-
-1. **## O que é** 
-   - **LIMITE OBRIGATÓRIO: MÁXIMO de 1-2 parágrafos de 2-3 linhas cada**
-   - Seja conciso e direto
-   - NÃO exceda 2 parágrafos
-   - Esse campo NÃO pode ficar em branco. 
-   - Cada parágrafo deve ter no máximo 3-4 linhas
-   - Explicação clara e objetiva do serviço
-
-2. **## Para que serve**
-   - **LIMITE OBRIGATÓRIO: MÁXIMO de 1 parágrafo de 2-3 linhas cada**
-   - NÃO exceda 1 parágrafo
-   - Seja OBJETIVO e centrado na ENTREGA que o serviço proporciona
-   - Esse campo NÃO pode ficar em branco. 
-   - NÃO seja genérico como "visa melhorar" ou "busca garantir"
-   - Exemplos: "Fiscalização efetiva das frotas de ônibus", "Coleta/Remoção dos entulhos"
-
-3. **## Quem pode solicitar** 
-   - **LIMITE OBRIGATÓRIO: MÁXIMO de 1 parágrafo de 2-3 linhas cada**
-   - NÃO exceda 1 parágrafo
-   - Esse campo NÃO pode ficar em branco. Sempre deve ter alguém pra solicitar. Caso não esteja no documento, o cidadão carioca será utilizad.
-   - Público-alvo e requisitos em parágrafos claros
-
-**ATENÇÃO ESPECIAL:** A seção "O que é" DEVE ser curta e objetiva. Se o texto de entrada for extenso, extraia apenas as informações essenciais e resuma em no máximo 2 parágrafos de 3-4 linhas cada. NÃO inclua todos os detalhes, apenas o essencial para explicar o que é o serviço.
-
 Siga TODAS as regras especificadas no início deste prompt, mas use a estrutura principal acima como referência PRINCIPAL para o formato de saída.
 
 Retorne APENAS um JSON com os seguintes campos (use os nomes exatos das chaves):
@@ -166,8 +130,88 @@ Retorne APENAS um JSON com os seguintes campos (use os nomes exatos das chaves):
 - `canais_presenciais`: string ou Markdown (endereços e horários)
 - `legislacao_relacionada`: string ou Markdown (referências legais)
 
-Cada campo deve ser preenchido — se uma informação não estiver disponível no texto de entrada, retorne uma string vazia para esse campo. Retorne o JSON puro (pode estar dentro de um bloco de código ```json```).
-"""
+        Cada campo deve ser preenchido — se uma informação não estiver disponível no texto de entrada, retorne uma string vazia para esse campo. Retorne o JSON puro (pode estar dentro de um bloco de código ```json```).
+        
+        ---
+        
+        Regras específicas por campo (siga rigorosamente):
+        
+        descricao_resumida
+        - Objetivo: Resumo curto e direto do serviço em 1-2 frases.
+        - Fontes: descricao, detalhes.
+        - Regras: Texto sucinto; sem listas/seções; linguagem simples; sem prazos/documentos/canais/legislação.
+        
+        descricao_completa
+        - Objetivo: Texto detalhado e estruturado em Markdown com as seções "O que é", "Para que serve", "Quem pode solicitar".
+        - Fontes: descricao, detalhes, como_funciona, informacoes.
+        - Regras: Preservar toda a informação do original; manter prazos, exceções e observações; usar apenas as 3 seções; não incluir instruções/documentos/canais/legislação.
+        - Limites por subseção: "O que é" (1-2 parágrafos, 3-4 linhas cada), "Para que serve" (1 parágrafo, 2-3 linhas), "Quem pode solicitar" (1 parágrafo, 2-3 linhas).
+        - Regras do campo `descricao_completa` (composto pelas 3 subseções abaixo):
+
+            1. **## O que é**
+                - **LIMITE OBRIGATÓRIO:** 1-2 parágrafos, cada um com 3-4 linhas
+                - Seja conciso e direto; explicação clara e objetiva do serviço
+                - NÃO exceda 2 parágrafos; campo obrigatório (não pode ficar em branco)
+
+            2. **## Para que serve**
+                - **LIMITE OBRIGATÓRIO:** 1 parágrafo de 2-3 linhas
+                - Seja OBJETIVO e centrado na ENTREGA do serviço
+                - NÃO use textos genéricos como "visa melhorar" ou "busca garantir"
+                - Exemplos de entrega: "Fiscalização efetiva das frotas de ônibus", "Coleta/Remoção dos entulhos"
+
+            3. **## Quem pode solicitar**
+                - **LIMITE OBRIGATÓRIO:** 1 parágrafo de 2-3 linhas
+                - Campo obrigatório; sempre deve haver público-alvo
+                - Caso não esteja explícito, usar o cidadão carioca como público padrão
+                - Descrever público-alvo e requisitos de forma clara
+
+                **ATENÇÃO ESPECIAL:** A seção "O que é" DEVE ser curta e objetiva. Se o texto de entrada for extenso, extraia apenas as informações essenciais e resuma em no máximo 2 parágrafos de 3-4 linhas cada. NÃO inclua todos os detalhes, apenas o essencial para explicar o que é o serviço.
+        
+        servico_nao_cobre
+        - Objetivo: Listar o que o serviço NÃO cobre.
+        - Fontes: detalhes, informacoes.
+        - Regras: Itens curtos em lista; não misturar com instruções ou documentos.
+        
+        tempo_atendimento
+        - Objetivo: Informar prazo/tempo estimado (ex.: 72 horas, até 20 dias).
+        - Fontes: detalhes, informacoes.
+        - Regras: Apenas o prazo; discriminar prazos por etapa se existirem; não colocar este conteúdo em descricao_completa.
+        
+        custo
+        - Objetivo: Informar custo/taxa quando aplicável.
+        - Fontes: detalhes, informacoes.
+        - Regras: Especificar valores e quando são cobrados; se não houver custo, usar "isento" ou "gratuito".
+        
+        resultado_solicitacao
+        - Objetivo: Descrever o resultado esperado após a conclusão (entregáveis/ações concluídas).
+        - Fontes: detalhes, informacoes.
+        - Regras: Ser objetivo e listar o output final.
+        
+        documentos_necessarios
+        - Objetivo: Listar documentos exigidos.
+        - Fontes: detalhes, informacoes.
+        - Regras: Lista de itens; incluir somente documentos explicitamente mencionados.
+        
+        instrucoes_solicitante
+        - Objetivo: Instruções passo a passo.
+        - Fontes: como_funciona, detalhes.
+        - Regras: Permite lista ordenada; não incluir conteúdo de descricao_completa nem legislação.
+        
+        canais_digitais
+        - Objetivo: Canais digitais oficiais (URLs, plataformas, APIs).
+        - Fontes: informacoes, detalhes.
+        - Regras: Fornecer URLs/identificadores oficiais; não usar links dentro de descricao_completa.
+        
+        canais_presenciais
+        - Objetivo: Locais físicos e horários.
+        - Fontes: informacoes, detalhes.
+        - Regras: Endereços completos e horários; não colocar endereços em descricao_completa.
+        
+        legislacao_relacionada
+        - Objetivo: Referências legais, decretos ou normas.
+        - Fontes: detalhes, informacoes.
+        - Regras: Listar leis/decretos com identificação (nº, ano) e breve nota quando necessário; não inserir textos legais longos.
+        """
     return prompt
 
 

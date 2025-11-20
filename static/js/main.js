@@ -246,17 +246,34 @@ function compilarResultadoEmMarkdown(res) {
   ];
 
   let md = "";
+  let tituloDescricaoCompletaInserido = false;
 
   camposOrdem.forEach((c) => {
     const v = res[c.key] || "";
-    if (!v || String(v).trim() === "") return; // pula campos vazios
+    const temValor = v && String(v).trim() !== "";
 
-    // Se o campo já tiver títulos Markdown (ex: descricao_completa), preserva
-    if (c.key === "descricao_completa") {
-      md += `\n\n${v.trim()}\n\n`;
-    } else {
-      md += `\n\n## ${c.title}\n\n${String(v).trim()}\n\n`;
+    if (c.key === "descricao_resumida") {
+      if (temValor) {
+        md += `\n\n## ${c.title}\n\n${String(v).trim()}\n\n`;
+      }
+      md += `\n\n## Descrição Completa\n\n`;
+      tituloDescricaoCompletaInserido = true;
+      return;
     }
+
+    if (c.key === "descricao_completa") {
+      if (!tituloDescricaoCompletaInserido) {
+        md += `\n\n## Descrição Completa\n\n`;
+        tituloDescricaoCompletaInserido = true;
+      }
+      if (temValor) {
+        md += `\n\n${String(v).trim()}\n\n`;
+      }
+      return;
+    }
+
+    if (!temValor) return;
+    md += `\n\n## ${c.title}\n\n${String(v).trim()}\n\n`;
   });
 
   return md.trim();

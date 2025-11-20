@@ -13,37 +13,23 @@ alwaysApply: true
 - **Controle de Versão:** Verificar a data do sistema ao registrar mudanças
 - **Documentação:** Manter arquivos .md de documentação na pasta `docs`
 - **Changelog:** Registrar alterações diárias em arquivos com formato `AAAA-MM-DD.md` na pasta `docs/changelogs`. Sempre que houver alterações novas, atualize o changelog do dia, e não crie um novo.
+# Extractor 9: Descrição Completa
 
+**Objetivo:** Criar descrição detalhada e estruturada COM Markdown.
 
-## Instruções
+## Orientação do Campo
 
-## Serviço a Processar
+**descricao_completa:** Descrição detalhada do serviço, seus objetivos e benefícios (COM Markdown para estruturação)
 
-**Collection:** {{collection_name}}
-
-**Dados:**
-```json
-{{service_json}}
-```
+⚠️ **CAMPO OBRIGATÓRIO** - Deve sempre ser preenchido com todos os detalhes disponíveis
 
 ---
 
-Retorne APENAS o JSON estruturado com 1 campo.
-
-### `descricao_resumida`
-
-**Objetivo:** Resumo curto e direto do serviço em 1-2 frases (máximo 2 linhas).
-
-**Fontes:** `descricao`, `detalhes`
-
-**Regras:**
-- Texto sucinto; não use listas ou seções Markdown — apenas um parágrafo curto.
-- Use linguagem simples e objetiva; evite jargões.
-- NÃO coloque prazos, documentos, canais ou legislação aqui.
+## Instruções
 
 ### `descricao_completa`
 
-**Objetivo:** Texto detalhado e estruturado (já documentado acima). Mantém todas as informações essenciais com formatação em Markdown.
+**Fontes:** `descricao`, `detalhes`, `como_funciona`, `informacoes`
 
 **🚨 REGRAS CRÍTICAS - PRESERVAÇÃO DE CONTEÚDO:**
 - **🚨 NUNCA invente ou adicione informações que não estejam no original**
@@ -250,6 +236,33 @@ funeral de dependente do servidor.
 
 ---
 
+## Serviço a Processar
+
+**Collection:** {{collection_name}}
+
+**Dados:**
+```json
+{{service_json}}
+```
+
+---
+
+Retorne APENAS o JSON estruturado com 1 campo.
+
+### `descricao_resumida`
+
+**Objetivo:** Resumo curto e direto do serviço em 1-2 frases (máximo 2 linhas).
+
+**Fontes:** `descricao`, `detalhes`
+
+**Regras:**
+- Texto sucinto; não use listas ou seções Markdown — apenas um parágrafo curto.
+- Use linguagem simples e objetiva; evite jargões.
+- NÃO coloque prazos, documentos, canais ou legislação aqui.
+
+### `descricao_completa`
+
+**Objetivo:** Texto detalhado e estruturado (já documentado acima). Mantém todas as informações essenciais com formatação em Markdown.
 
 **Fontes:** `descricao`, `detalhes`, `como_funciona`, `informacoes`
 
@@ -345,4 +358,3 @@ funeral de dependente do servidor.
 **Regras:**
 - Liste leis e decretos com identificação (nº, ano) e, se necessário, um breve resumo.
 - Não inserir textos legais longos; apenas referências e notas.
-

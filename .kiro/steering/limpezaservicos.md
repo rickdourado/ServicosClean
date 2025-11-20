@@ -11,23 +11,37 @@ inclusion: always
 - **Controle de Versão:** Verificar a data do sistema ao registrar mudanças
 - **Documentação:** Manter arquivos .md de documentação na pasta `docs`
 - **Changelog:** Registrar alterações diárias em arquivos com formato `AAAA-MM-DD.md` na pasta `docs/changelogs`. Sempre que houver alterações novas, atualize o changelog do dia, e não crie um novo.
-# Extractor 9: Descrição Completa
 
-**Objetivo:** Criar descrição detalhada e estruturada COM Markdown.
-
-## Orientação do Campo
-
-**descricao_completa:** Descrição detalhada do serviço, seus objetivos e benefícios (COM Markdown para estruturação)
-
-⚠️ **CAMPO OBRIGATÓRIO** - Deve sempre ser preenchido com todos os detalhes disponíveis
-
----
 
 ## Instruções
 
+## Serviço a Processar
+
+**Collection:** {{collection_name}}
+
+**Dados:**
+```json
+{{service_json}}
+```
+
+---
+
+Retorne APENAS o JSON estruturado com 1 campo.
+
+### `descricao_resumida`
+
+**Objetivo:** Resumo curto e direto do serviço em 1-2 frases (máximo 2 linhas).
+
+**Fontes:** `descricao`, `detalhes`
+
+**Regras:**
+- Texto sucinto; não use listas ou seções Markdown — apenas um parágrafo curto.
+- Use linguagem simples e objetiva; evite jargões.
+- NÃO coloque prazos, documentos, canais ou legislação aqui.
+
 ### `descricao_completa`
 
-**Fontes:** `descricao`, `detalhes`, `como_funciona`, `informacoes`
+**Objetivo:** Texto detalhado e estruturado (já documentado acima). Mantém todas as informações essenciais com formatação em Markdown.
 
 **🚨 REGRAS CRÍTICAS - PRESERVAÇÃO DE CONTEÚDO:**
 - **🚨 NUNCA invente ou adicione informações que não estejam no original**
@@ -234,15 +248,99 @@ funeral de dependente do servidor.
 
 ---
 
-## Serviço a Processar
 
-**Collection:** {{collection_name}}
+**Fontes:** `descricao`, `detalhes`, `como_funciona`, `informacoes`
 
-**Dados:**
-```json
-{{service_json}}
-```
+**Regras:**
+- Preserve toda a informação do original; mantenha prazos, exceções e observações.
+- Use as 3 seções recomendadas: `O que é`, `Para que serve`, `Quem pode solicitar`.
 
----
+### `servico_nao_cobre`
 
-Retorne APENAS o JSON estruturado com 1 campo.
+**Objetivo:** Listar explicitamente o que o serviço NÃO cobre (limitações e exclusões).
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Liste itens curtos (- item) com clareza.
+- NÃO misturar com instruções ou documentos necessários.
+
+### `tempo_atendimento`
+
+**Objetivo:** Indicar o prazo ou tempo estimado de atendimento (ex.: 72 horas, até 20 dias).
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Informe apenas o prazo (texto curto). Se houver diferentes prazos para etapas, discrimine-os claramente.
+- NÃO coloque este conteúdo dentro de `descricao_completa`.
+
+### `custo`
+
+**Objetivo:** Informar custo ou taxa do serviço, quando aplicável.
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Especifique valores e quando são cobrados (ex.: taxa única, mensalidade).
+- Se não houver custo, explicite "isento" ou "gratuito".
+
+### `resultado_solicitacao`
+
+**Objetivo:** Descrever o resultado esperado após a conclusão do serviço (entregáveis, documentos emitidos, ações concluídas).
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Seja objetivo e liste o output final do processo.
+
+### `documentos_necessarios`
+
+**Objetivo:** Listar documentos exigidos para solicitar o serviço.
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Use lista de itens (`- Documento XYZ`).
+- NÃO inclua documentos que não sejam explicitamente mencionados no original.
+
+### `instrucoes_solicitante`
+
+**Objetivo:** Orientações passo a passo para o solicitante (formulários, preenchimento, onde entregar).
+
+**Fontes:** `como_funciona`, `detalhes`
+
+**Regras:**
+- Permite instruções passo a passo; use listas ordenadas quando necessário.
+- NÃO inclua conteúdo que pertença a `descricao_completa` ou `legislacao_relacionada`.
+
+### `canais_digitais`
+
+**Objetivo:** Indicar canais digitais oficiais para solicitar ou acompanhar o serviço (URLs, plataformas, APIs).
+
+**Fontes:** `informacoes`, `detalhes`
+
+**Regras:**
+- Forneça URLs ou identificadores de plataforma (quando disponíveis).
+- Use apenas canais oficiais mencionados no original.
+
+### `canais_presenciais`
+
+**Objetivo:** Informar locais físicos e horários para atendimento presencial.
+
+**Fontes:** `informacoes`, `detalhes`
+
+**Regras:**
+- Liste endereços completos e horários de atendimento, se presentes.
+- NÃO coloque endereços em `descricao_completa`.
+
+### `legislacao_relacionada`
+
+**Objetivo:** Referências legais, decretos ou normas que regem o serviço.
+
+**Fontes:** `detalhes`, `informacoes`
+
+**Regras:**
+- Liste leis e decretos com identificação (nº, ano) e, se necessário, um breve resumo.
+- Não inserir textos legais longos; apenas referências e notas.
+
