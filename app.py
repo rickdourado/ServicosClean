@@ -115,6 +115,7 @@ Esta é a estrutura PRINCIPAL que deve ser seguida para padronizar TODOS os serv
 Analise o texto livre acima e extraia/processe as informações para criar uma descrição completa.
 
 Siga TODAS as regras especificadas no início deste prompt, mas use a estrutura principal acima como referência PRINCIPAL para o formato de saída.
+A linguagem deverá ser simples, sem jargões ou termos complexos, voltadas para uma população comum.
 
 Retorne APENAS um JSON com os seguintes campos (use os nomes exatos das chaves):
 
@@ -139,12 +140,12 @@ Retorne APENAS um JSON com os seguintes campos (use os nomes exatos das chaves):
         descricao_resumida
         - Objetivo: Resumo curto e direto do serviço em 1-2 frases.
         - Fontes: descricao, detalhes.
-        - Regras: Texto sucinto; sem listas/seções; linguagem simples; sem prazos/documentos/canais/legislação.
+        - Regras: Texto sucinto; sem listas/seções; linguagem simples, sem jargões ou termos complexos, voltadas para uma população comum; sem prazos/documentos/canais/legislação.
         
         descricao_completa
         - Objetivo: Texto detalhado e estruturado em Markdown com as seções "O que é", "Para que serve", "Quem pode solicitar".
         - Fontes: descricao, detalhes, como_funciona, informacoes.
-        - Regras: Preservar toda a informação do original; manter prazos, exceções e observações; usar apenas as 3 seções; não incluir instruções/documentos/canais/legislação.
+        - Regras: Preservar toda a informação do original; linguagem simples, sem jargões ou termos complexos, voltadas para uma população comum; manter prazos, exceções e observações; usar apenas as 3 seções; não incluir instruções/documentos/canais/legislação.
         - Limites por subseção: "O que é" (1-2 parágrafos, 3-4 linhas cada), "Para que serve" (1 parágrafo, 2-3 linhas), "Quem pode solicitar" (1 parágrafo, 2-3 linhas).
         - Regras do campo `descricao_completa` (composto pelas 3 subseções abaixo):
 
