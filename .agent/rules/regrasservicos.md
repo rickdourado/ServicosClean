@@ -1,8 +1,7 @@
 ---
-description: projeto LimpezaServicos
-globs:
-alwaysApply: true
+trigger: always_on
 ---
+
 # Regras do Projeto LimpezaServicos
 - **SEMPRE** Execute um comando no terminal por vez, ao invés de utilizar &&, para evitar erros.
 - **SEMPRE** Execute o comando conda activate prefservicos quando um terminal for aberto.
@@ -346,29 +345,3 @@ funeral de dependente do servidor.
 - Liste leis e decretos com identificação (nº, ano) e, se necessário, um breve resumo.
 - Não inserir textos legais longos; apenas referências e notas.
 
-
---- PROMPT INFORMACAO ---
-
-## PROMPT ALTERNATIVO - SCRIPT DE INFORMAÇÃO
-
-Ajuste o texto fornecido para o formato de SCRIPT DE INFORMAÇÃO da Prefeitura do Rio de Janeiro.
-Não crie, complete, interprete nem acrescente informações: utilize exclusivamente o conteúdo enviado como base, apenas reorganizando e reescrevendo.
-
-Estrutura obrigatória:
-Utilize exatamente os seguintes tópicos, nesta ordem e retorne um JSON com estas chaves:
-
-- `o_que_e`: O que é
-- `como_funciona`: Como funciona
-- `publico_alvo`: Público-alvo
-- `informacoes_importantes`: Informações importantes
-
-Regras de escrita:
-Linguagem simples, clara e cidadã.
-Evite termos técnicos, jurídicos ou burocráticos.
-Preserve integralmente o sentido e as ideias originais.
-Não use linguagem de solicitação, pedido ou atendimento.
-Não utilize os tópicos “Para que serve” ou “Quem pode solicitar”.
-
-Objetivo:
-
-Traduzir o conteúdo fornecido para um formato informativo padronizado, permitindo que o cidadão compreenda o tema de forma rápida e acessível, sem inclusão de novas informações.

@@ -6,6 +6,7 @@ let textoMarkdownOriginal = "";
  */
 async function processarTexto() {
   const textoEntrada = document.getElementById("texto-entrada").value.trim();
+  const tipoProcessamento = document.getElementById("tipo-processamento").value || "servico";
   const btnProcessar = document.getElementById("btn-processar");
   const textoSaida = document.getElementById("texto-saida");
   const mensagemErro = document.getElementById("mensagem-erro");
@@ -37,6 +38,7 @@ async function processarTexto() {
       },
       body: JSON.stringify({
         texto: textoEntrada,
+        tipo: tipoProcessamento
       }),
     });
 
@@ -47,7 +49,7 @@ async function processarTexto() {
       const resultado = data.resultado;
 
       // Compõe um Markdown completo a partir dos campos retornados
-      const compiledMarkdown = compilarResultadoEmMarkdown(resultado);
+      const compiledMarkdown = compilarResultadoEmMarkdown(resultado, tipoProcessamento);
 
       // Armazena o texto markdown original (para download/copiar)
       textoMarkdownOriginal = compiledMarkdown;
@@ -228,22 +230,33 @@ function baixarTexto() {
 /**
  * Compila o objeto de resultado em um único documento Markdown
  */
-function compilarResultadoEmMarkdown(res) {
+function compilarResultadoEmMarkdown(res, tipo) {
   if (!res || typeof res !== "object") return "";
 
-  const camposOrdem = [
-    { key: "descricao_resumida", title: "Descrição Resumida" },
-    { key: "descricao_completa", title: "Descrição Completa" },
-    { key: "servico_nao_cobre", title: "O que o serviço não cobre" },
-    { key: "tempo_atendimento", title: "Tempo para atendimento" },
-    { key: "custo", title: "Custo" },
-    { key: "resultado_solicitacao", title: "Resultado da solicitação" },
-    { key: "documentos_necessarios", title: "Documentos necessários" },
-    { key: "instrucoes_solicitante", title: "Instruções para o solicitante" },
-    { key: "canais_digitais", title: "Canais digitais" },
-    { key: "canais_presenciais", title: "Canais presenciais" },
-    { key: "legislacao_relacionada", title: "Legislação relacionada" },
-  ];
+  let camposOrdem = [];
+
+  if (tipo === "informacao") {
+    camposOrdem = [
+      { key: "o_que_e", title: "O que é" },
+      { key: "como_funciona", title: "Como funciona" },
+      { key: "publico_alvo", title: "Público-alvo" },
+      { key: "informacoes_importantes", title: "Informações importantes" }
+    ];
+  } else {
+    camposOrdem = [
+      { key: "descricao_resumida", title: "Descrição Resumida" },
+      { key: "descricao_completa", title: "Descrição Completa" },
+      { key: "servico_nao_cobre", title: "O que o serviço não cobre" },
+      { key: "tempo_atendimento", title: "Tempo para atendimento" },
+      { key: "custo", title: "Custo" },
+      { key: "resultado_solicitacao", title: "Resultado da solicitação" },
+      { key: "documentos_necessarios", title: "Documentos necessários" },
+      { key: "instrucoes_solicitante", title: "Instruções para o solicitante" },
+      { key: "canais_digitais", title: "Canais digitais" },
+      { key: "canais_presenciais", title: "Canais presenciais" },
+      { key: "legislacao_relacionada", title: "Legislação relacionada" },
+    ];
+  }
 
   let md = "";
   let tituloDescricaoCompletaInserido = false;
@@ -252,7 +265,7 @@ function compilarResultadoEmMarkdown(res) {
     const v = res[c.key] || "";
     const temValor = v && String(v).trim() !== "";
 
-    if (c.key === "descricao_resumida") {
+    if (tipo !== "informacao" && c.key === "descricao_resumida") {
       if (temValor) {
         md += `\n\n## ${c.title}\n\n${String(v).trim()}\n\n`;
       }
@@ -261,7 +274,7 @@ function compilarResultadoEmMarkdown(res) {
       return;
     }
 
-    if (c.key === "descricao_completa") {
+    if (tipo !== "informacao" && c.key === "descricao_completa") {
       if (!tituloDescricaoCompletaInserido) {
         md += `\n\n## Descrição Completa\n\n`;
         tituloDescricaoCompletaInserido = true;
@@ -285,11 +298,13 @@ function compilarResultadoEmMarkdown(res) {
 document.addEventListener("DOMContentLoaded", function () {
   const textoEntrada = document.getElementById("texto-entrada");
 
-  textoEntrada.addEventListener("keydown", function (e) {
-    // Ctrl+Enter ou Cmd+Enter para processar
-    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-      e.preventDefault();
-      processarTexto();
-    }
-  });
+  if (textoEntrada) {
+    textoEntrada.addEventListener("keydown", function (e) {
+      // Ctrl+Enter ou Cmd+Enter para processar
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        processarTexto();
+      }
+    });
+  }
 });
