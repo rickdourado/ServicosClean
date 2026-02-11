@@ -33,10 +33,10 @@ app = Flask(__name__)
 
 def carregar_prompt_arquivo(tipo):
     """
-    Carrega o prompt do arquivo .txt correspondente na pasta prompts/
+    Carrega o prompt do arquivo .md correspondente na pasta prompts/
     """
     try:
-        arquivo = Path(f'prompts/{tipo}.txt')
+        arquivo = Path(f'prompts/{tipo}.md')
         if not arquivo.exists():
             raise FileNotFoundError(f"Arquivo de prompt não encontrado: {arquivo}")
             
@@ -49,7 +49,7 @@ def carregar_prompt_arquivo(tipo):
 def criar_prompt(tipo, texto_entrada):
     """
     Cria o prompt apropriado com base no tipo (servico ou informacao).
-    Lê o arquivo de template em prompts/{tipo}.txt e injeta o texto de entrada.
+    Lê o arquivo de template em prompts/{tipo}.md e injeta o texto de entrada.
     """
     regras = carregar_prompt_arquivo(tipo)
     
