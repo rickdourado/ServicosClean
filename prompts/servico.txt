@@ -226,6 +226,7 @@ funeral de dependente do servidor.
 **Regras:**
 - Preserve toda a informação do original; mantenha prazos, exceções e observações.
 - Use as 3 seções recomendadas: `O que é`, `Para que serve`, `Quem pode solicitar`.
+- Não repita informações entre os tópicos `O que é`, `Para que serve` e `Quem pode solicitar`.
 
 ### `servico_nao_cobre`
 

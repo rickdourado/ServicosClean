@@ -17,6 +17,7 @@ Evite termos técnicos, jurídicos ou burocráticos.
 Preserve integralmente o sentido e as ideias originais.
 Não use linguagem de solicitação, pedido ou atendimento.
 Não utilize os tópicos “Para que serve” ou “Quem pode solicitar”.
+Não repita informações entre os tópicos `O que é`, `Como funciona`, `Público-alvo` e `Informações importantes`.
 
 Objetivo:
 
