@@ -1,61 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Atualização de Serviços Pref.rio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <header>
-            <h1>Atualização de Descrição de Serviços Pref.rio</h1>
-            <p class="subtitle">Processe descrições de serviços utilizando IA</p>
-        </header>
+      <header>
+        <a href="{{ url_for('index') }}" class="btn-home">
+          <span>🏠</span> Home
+        </a>
+        <h1>Atualização de Descrição de Serviços Pref.rio</h1>
+        <p class="subtitle">Processe descrições de serviços utilizando IA</p>
+      </header>
 
-        <main>
-            <div class="input-section">
-                <input type="hidden" id="tipo-processamento" value="servico">
-                <label for="texto-entrada">Digite o texto livre sobre o serviço:</label>
-                <textarea id="texto-entrada"
-                    placeholder="Digite qualquer texto sobre o serviço. A IA irá processar e formatar automaticamente nas seções: O que é, Para que serve e Quem pode solicitar."
-                    rows="10"></textarea>
-            </div>
+      <main>
+        <div class="input-section">
+          <input type="hidden" id="tipo-processamento" value="servico" />
+          <label for="texto-entrada"
+            >Digite o texto livre sobre o serviço:</label
+          >
+          <textarea
+            id="texto-entrada"
+            placeholder="Digite qualquer texto sobre o serviço. A IA irá processar e formatar automaticamente nas seções: O que é, Para que serve e Quem pode solicitar."
+            rows="10"
+          ></textarea>
+          <div class="button-section">
+            <button id="btn-processar" onclick="processarTexto()">
+              <span class="btn-text">Processar</span>
+              <span class="btn-loader" style="display: none">
+                <span class="spinner"></span>
+                Processando...
+              </span>
+            </button>
+          </div>
+        </div>
 
-            <div class="button-section">
-                <button id="btn-processar" onclick="processarTexto()">
-                    <span class="btn-text">Processar</span>
-                    <span class="btn-loader" style="display: none;">
-                        <span class="spinner"></span>
-                        Processando...
-                    </span>
-                </button>
-            </div>
+        <div class="output-section">
+          <label for="texto-saida">Resultado processado:</label>
+          <div id="texto-saida" class="output-area"></div>
 
-            <div class="output-section">
-                <label for="texto-saida">Resultado processado:</label>
-                <div id="texto-saida" class="output-area"></div>
+          <div
+            id="download-buttons"
+            class="download-buttons"
+            style="display: none"
+          >
+            <button
+              id="btn-copiar-texto"
+              onclick="copiarTexto()"
+              class="btn-download btn-copiar"
+            >
+              <span>📋</span> Copiar Texto
+            </button>
+            <button
+              id="btn-download-md"
+              onclick="baixarMarkdown()"
+              class="btn-download"
+            >
+              <span>📄</span> Baixar .md
+            </button>
+            <button
+              id="btn-download-txt"
+              onclick="baixarTexto()"
+              class="btn-download"
+            >
+              <span>📝</span> Baixar .txt
+            </button>
+          </div>
+        </div>
 
-                <div id="download-buttons" class="download-buttons" style="display: none;">
-                    <button id="btn-copiar-texto" onclick="copiarTexto()" class="btn-download btn-copiar">
-                        <span>📋</span> Copiar Texto
-                    </button>
-                    <button id="btn-download-md" onclick="baixarMarkdown()" class="btn-download">
-                        <span>📄</span> Baixar .md
-                    </button>
-                    <button id="btn-download-txt" onclick="baixarTexto()" class="btn-download">
-                        <span>📝</span> Baixar .txt
-                    </button>
-                </div>
-            </div>
-
-            <div id="mensagem-erro" class="mensagem-erro" style="display: none;"></div>
-        </main>
+        <div
+          id="mensagem-erro"
+          class="mensagem-erro"
+          style="display: none"
+        ></div>
+      </main>
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
-
+  </body>
 </html>

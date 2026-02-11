@@ -11,6 +11,9 @@
 <body>
     <div class="container">
         <header>
+            <a href="{{ url_for('index') }}" class="btn-home">
+                <span>🏠</span> Home
+            </a>
             <h1>Atualização de Descrição de Informações Pref.rio</h1>
             <p class="subtitle">Processe descrições de informações utilizando IA</p>
         </header>
@@ -20,18 +23,18 @@
                 <input type="hidden" id="tipo-processamento" value="informacao">
                 <label for="texto-entrada">Digite o texto livre sobe a informação:</label>
                 <textarea id="texto-entrada"
-                    placeholder="Digite qualquer texto sobre o serviço. A IA irá processar e formatar automaticamente nas seções: O que é, Para que serve e Quem pode solicitar."
+                    placeholder="Digite qualquer texto sobre a informação. A IA irá processar e formatar automaticamente nas seções: O que é, Como funciona, Público-alvo e Informações importantes."
                     rows="10"></textarea>
-            </div>
-
-            <div class="button-section">
-                <button id="btn-processar" onclick="processarTexto()">
-                    <span class="btn-text">Processar</span>
-                    <span class="btn-loader" style="display: none;">
-                        <span class="spinner"></span>
-                        Processando...
-                    </span>
-                </button>
+                
+                <div class="button-section">
+                    <button id="btn-processar" onclick="processarTexto()">
+                        <span class="btn-text">Processar</span>
+                        <span class="btn-loader" style="display: none;">
+                            <span class="spinner"></span>
+                            Processando...
+                        </span>
+                    </button>
+                </div>
             </div>
 
             <div class="output-section">
