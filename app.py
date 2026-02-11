@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 
 # Carrega variáveis de ambiente
 load_dotenv()
@@ -19,8 +19,9 @@ GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 if not GEMINI_API_KEY:
     print("AVISO: GEMINI_API_KEY não encontrada no arquivo .env")
 
+client = None
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Cria a aplicação Flask
 app = Flask(__name__)
@@ -122,11 +123,15 @@ def processar_com_gemini(prompt):
     Processa o prompt usando a API do Gemini.
     """
     try:
-        if not GEMINI_API_KEY:
-            raise ValueError("GEMINI_API_KEY não configurada")
+        if not client:
+            raise ValueError("Cliente Gemini não configurado (verifique GEMINI_API_KEY)")
         
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        response = model.generate_content(prompt)
+        # O modelo no código original era 'gemini-2.5-flash', mantendo-o.
+        # Caso não exista, o usuário deverá alterar para um modelo válido (ex: gemini-2.0-flash).
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt
+        )
         
         texto_resposta = response.text.strip()
         

@@ -5,7 +5,7 @@ com a API key configurada no arquivo .env
 
 import os
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 
 # Carrega variáveis de ambiente
 load_dotenv()
@@ -19,7 +19,7 @@ if not GEMINI_API_KEY:
     exit(1)
 
 print("=" * 70)
-print("Verificacao de Servicos do Gemini")
+print("Verificacao de Servicos do Gemini (google.genai SDK)")
 print("=" * 70)
 print()
 print(f"[OK] API Key encontrada: {GEMINI_API_KEY[:10]}...{GEMINI_API_KEY[-4:]}")
@@ -27,10 +27,10 @@ print()
 
 # Configura a API
 try:
-    genai.configure(api_key=GEMINI_API_KEY)
-    print("[OK] API configurada com sucesso")
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    print("[OK] Cliente configurado com sucesso")
 except Exception as e:
-    print(f"[ERRO] Erro ao configurar API: {e}")
+    print(f"[ERRO] Erro ao configurar Cliente: {e}")
     exit(1)
 
 print()
@@ -41,14 +41,19 @@ print()
 
 try:
     # Lista todos os modelos disponíveis
-    modelos = genai.list_models()
-    
+    # Pager for list_models
     modelos_disponiveis = []
     modelos_geracao = []
     
-    for modelo in modelos:
+    # The new SDK list methods returns a pager. 
+    # We iterate through it.
+    for modelo in client.models.list():
         nome = modelo.name
-        metodos_suportados = list(modelo.supported_generation_methods)
+        # Check supported methods if available in the object property
+        # The new SDK model object structure depends on the version.
+        # usually it has supported_generation_methods
+        
+        metodos_suportados = getattr(modelo, 'supported_generation_methods', [])
         
         modelos_disponiveis.append({
             'nome': nome,
@@ -71,7 +76,12 @@ try:
             print(f"  - {nome_limpo}")
         print()
     else:
-        print("[AVISO] Nenhum modelo encontrado que suporta 'generateContent'")
+        print("[AVISO] Nenhum modelo encontrado que suporta 'generateContent' (ou propriedade não disponível)")
+        # Fallback: list all names if supported_generation_methods is empty
+        if not modelos_geracao and modelos_disponiveis:
+             print("Listando todos os modelos (filtro de método não aplicável):")
+             for m in modelos_disponiveis:
+                 print(f" - {m['nome']}")
         print()
     
     print("-" * 70)
@@ -83,10 +93,9 @@ try:
     modelos_para_testar = [
         'gemini-1.5-flash',
         'gemini-1.5-pro',
-        'gemini-1.5-flash-latest',
-        'gemini-1.5-pro-latest',
-        'gemini-pro',
+        'gemini-2.0-flash', # Trying 2.0-flash as it is the new standard
         'gemini-2.0-flash-exp',
+        'gemini-2.5-flash', # Testing the one used in app.py
     ]
     
     modelos_funcionando = []
@@ -94,9 +103,11 @@ try:
     
     for modelo_nome in modelos_para_testar:
         try:
-            model = genai.GenerativeModel(modelo_nome)
             # Tenta gerar uma resposta simples para verificar se funciona
-            response = model.generate_content("Teste")
+            response = client.models.generate_content(
+                model=modelo_nome,
+                contents="Teste"
+            )
             modelos_funcionando.append(modelo_nome)
             print(f"  [OK] {modelo_nome}: FUNCIONANDO")
         except Exception as e:
@@ -114,51 +125,13 @@ try:
         for modelo in modelos_funcionando:
             print(f"   - {modelo}")
         print()
-        print(f"[RECOMENDACAO] Use '{modelos_funcionando[0]}' (primeiro da lista)")
     else:
         print("[AVISO] Nenhum modelo testado funcionou. Verifique sua API key.")
     
-    print()
-    print("-" * 70)
-    print("4. Informações detalhadas dos modelos")
-    print("-" * 70)
-    print()
-    
-    for modelo_info in modelos_disponiveis[:10]:  # Mostra os primeiros 10
-        nome_limpo = modelo_info['nome'].replace('models/', '')
-        metodos = ', '.join(modelo_info['metodos'])
-        print(f"Modelo: {nome_limpo}")
-        print(f"  Métodos suportados: {metodos}")
-        print()
-    
-    if len(modelos_disponiveis) > 10:
-        print(f"... e mais {len(modelos_disponiveis) - 10} modelos")
-        print()
-    
 except Exception as e:
-    print(f"[ERRO] Erro ao listar modelos: {e}")
-    print()
-    print("Tentando verificar diretamente...")
-    print()
-    
-    # Tenta testar modelos diretamente
-    modelos_para_testar = [
-        'gemini-1.5-flash',
-        'gemini-1.5-pro',
-        'gemini-1.5-flash-latest',
-        'gemini-1.5-pro-latest',
-    ]
-    
-    for modelo_nome in modelos_para_testar:
-        try:
-            model = genai.GenerativeModel(modelo_nome)
-            response = model.generate_content("Teste")
-            print(f"[OK] {modelo_nome}: FUNCIONANDO")
-        except Exception as e:
-            print(f"[ERRO] {modelo_nome}: {str(e)[:80]}")
+    print(f"[ERRO] Erro ao listar/testar modelos: {e}")
 
 print()
 print("=" * 70)
 print("Verificação concluída!")
 print("=" * 70)
-
