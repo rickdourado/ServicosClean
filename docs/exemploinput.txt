@@ -1,0 +1,34 @@
+TEXTO DE ENTRADA:
+
+""O que é
+Este serviço oferece informações detalhadas sobre os Bailes Populares e o tradicional Baile da Cinelândia, eventos promovidos pela Riotur durante o período de carnaval. Os bailes acontecem em palcos montados ao ar livre, proporcionando entretenimento para a população.
+
+Os Bailes Populares são realizados em palcos distribuídos pela cidade, no sábado, domingo, segunda e terça de carnaval. Neles, grupos de pagode e bandas carnavalescas se apresentam nos quatro dias de folia.
+
+O Baile da Cinelândia, por sua vez, ocorre na Praça Marechal Floriano (em frente às escadarias da Câmara Municipal), também no sábado, domingo, segunda e terça de Carnaval.
+
+Para que serve
+Proporcionar entretenimento cultural gratuito e promover a celebração do carnaval carioca através de bailes populares e o tradicional Baile da Cinelândia. O serviço visa informar sobre a programação e os locais desses eventos festivos.
+
+Quem pode solicitar
+Qualquer cidadão interessado em participar das festividades de carnaval no Rio de Janeiro pode usufruir das informações sobre os Bailes Populares e o Baile da Cinelândia. Os eventos são abertos ao público."
+
+
+TEXTO DE SAIDA:
+
+"O que é
+Programação de bailes de Carnaval gratuitos, realizados ao ar livre em diversos pontos da cidade, incluindo o tradicional palco da Cinelândia. Os eventos são organizados pela Riotur e contam com apresentações de grupos de pagode e bandas carnavalescas.
+
+Como funciona
+As apresentações ocorrem durante os quatro dias de folia (sábado, domingo, segunda e terça-feira de Carnaval).
+
+- Bailes Populares: Realizados em palcos montados em diferentes bairros do Rio de Janeiro.
+- Baile da Cinelândia: Acontece na Praça Marechal Floriano, no Centro, em frente às escadarias da Câmara Municipal.
+
+Público-alvo
+Moradores e visitantes interessados em aproveitar a programação gratuita de Carnaval no Rio de Janeiro.
+
+Informações importantes
+- O acesso aos palcos é livre e gratuito.
+- A programação detalhada com os horários e endereços de todos os palcos populares pode ser consultada nos canais oficiais da Riotur próximo ao período carnavalesco.
+- Por serem eventos ao ar livre, recomenda-se atenção às orientações de segurança e limpeza urbana da Prefeitura."

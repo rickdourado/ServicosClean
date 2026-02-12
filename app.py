@@ -16,6 +16,8 @@ load_dotenv()
 
 # Configuração da API do Gemini
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-2.5-flash')
+
 if not GEMINI_API_KEY:
     print("AVISO: GEMINI_API_KEY não encontrada no arquivo .env")
 
@@ -126,10 +128,9 @@ def processar_com_gemini(prompt):
         if not client:
             raise ValueError("Cliente Gemini não configurado (verifique GEMINI_API_KEY)")
         
-        # O modelo no código original era 'gemini-2.5-flash', mantendo-o.
-        # Caso não exista, o usuário deverá alterar para um modelo válido (ex: gemini-2.0-flash).
+        # Utiliza o modelo definido na variável de ambiente
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model=GEMINI_MODEL,
             contents=prompt
         )
         

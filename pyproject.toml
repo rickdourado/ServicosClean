@@ -1,0 +1,15 @@
+[project]
+name = "ServicosClean"
+version = "0.1.0"
+description = "Serviços Clean - Automação com Gemini"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-genai",
+    "python-dotenv>=1.0.0",
+    "flask>=2.3.0",
+    "typing-extensions",
+]
+
+[tool.uv]
+managed = true
