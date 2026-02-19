@@ -43,6 +43,7 @@ Utilize exatamente os seguintes tópicos, nesta ordem, formatados como títulos 
    - **Importante:** Não use como critério de elegibilidade/restrição ("quem pode solicitar"), mas como direcionamento de interesse ("a quem interessa").
 
 4. **Informações importantes**
+   - deve ser incluídas como tópico apenas quando for algo que não tem como ser adicionado em outro tópico, algo realmente importante para ter um destaque.
    - Contexto, observações relevantes, dados complementares.
 
 ### Objetivo
