@@ -5,7 +5,7 @@ Não crie, complete, interprete nem acrescente informações: utilize exclusivam
 
 ### Contexto
 
-Diferente dos Scripts de Serviço (focados em ação/solicitação), os Scripts de Informação focam na compreensão, orientação e contextualização. O cidadão lê para entender, não para pedir.
+Diferente dos Scripts de Serviço (focados em ação/solicitação), os Scripts de Informação focam na compreensão, orientação e contextualização. O cidadão lê para entender, não para pedir. Ou seja, visa informar e não solicitar.
 
 ### 🚨 REGRAS CRÍTICAS - PRESERVAÇÃO DE CONTEÚDO
 
